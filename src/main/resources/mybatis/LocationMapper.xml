@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.app.mapper.LocationMapper">
+
+
+	<resultMap id="LocationMapper"
+		type="com.example.app.domain.Item">
+
+		<id property="id" column="i.id" />
+		<result property="name" column="i.name" />
+		<result property="amount" column="i.amount" />
+
+		<association property="Location"
+			type="com.example.app.domain.Location">
+
+			<id property="id" column="l.id" />
+			<result property="name" column="l.name" />
+
+		</association>
+
+	</resultMap>
+
+
+	<select resultMap="LocationMapper">
+
+		select i.id,
+		i.name,
+		i.amount,
+		l.name
+		from locations l
+		join items i
+		on i.location_id = l.id
+		order by i.registered desc;
+	</select>
+
+
+</mapper>
