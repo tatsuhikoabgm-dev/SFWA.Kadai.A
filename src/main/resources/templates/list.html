@@ -12,7 +12,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-			<a class="navbar-brand" href="">備品管理システム</a>
+			<a class="navbar-brand" th:href="@{/items}">備品管理システム</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
 				aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
 							山田太郎さん
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<li><a class="dropdown-item" href="login.html">ログアウト</a></li>
+							<li><a class="dropdown-item" th:href="@{/logout}">ログアウト</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -42,7 +42,7 @@
 	</nav>
 	<div class="container mt-5">
 		<h1>備品リスト</h1>
-		<a class="btn btn-primary my-3" href="save.html">備品の追加</a>
+		<a class="btn btn-primary my-3" th:href="@{/items/add}">備品の追加</a>
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table table-bordered table-hover list-table">
@@ -59,24 +59,11 @@
 						<tr th:each="location : ${items}" th:object="${location}"  class="align-middle">
 							<td th:text="*{id}"></td>
 							<td th:text="*{name}"></td>
-<!--							<td th:text="*{amount}"></td>-->
-							<td ></td>
-							<td><a class="btn btn-warning" href="detail.html">詳細</a></td>
+							<td th:text="*{amount}"></td>
+							<td th:text="*{location.name}"></td>
+							<td><a class="btn btn-warning" th:href="@{items/detail/{id}(id=*{id})}">詳細</a></td>
 						</tr>
-						<tr class="align-middle">
-							<td>2</td>
-							<td>ノートPC</td>
-							<td>1</td>
-							<td>総務部</td>
-							<td><a class="btn btn-warning" href="detail.html">詳細</a></td>
-						</tr>
-						<tr class="align-middle">
-							<td>1</td>
-							<td>ノートPC</td>
-							<td>1</td>
-							<td>開発部</td>
-							<td><a class="btn btn-warning" href="detail.html">詳細</a></td>
-						</tr>
+						
 					</tbody>
 				</table>
 			</div>

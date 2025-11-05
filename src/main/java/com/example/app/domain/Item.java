@@ -10,7 +10,7 @@ public class Item {
 	private Integer id;
 	private String name;
 	private Integer amount;
-	private Location locationId;//Locationをネストしてる
+	private Location location;//Locationをネストしてる
 	private String note;
 	private LocalDateTime registered;
 	private LocalDateTime updated;
