@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.app.domain.Item;
-import com.example.app.service.ItemService;
+import com.example.app.service.ItemServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,13 +19,13 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/")
 public class ItemController {
 	
-	public final ItemService itemService;
+	private final ItemServiceImpl itemServiceImpl;
 
 	@GetMapping("/items")
 	public String showItems(Model model) {
 		
-		model.addAttribute("items",itemService.getAllItems());
-		System.out.println(itemService.getAllItems());
+		model.addAttribute("items",itemServiceImpl.getAllItems());
+		System.out.println(itemServiceImpl.getAllItems());
 		
 		return "list";
 	}
@@ -33,15 +33,16 @@ public class ItemController {
 	@GetMapping("/items/add")
 	public String showAddForm(Model model) {
 		model.addAttribute("inputForm",new Item());
-		model.addAttribute("locations",itemService.getItemLocations());
-		System.out.println(itemService.getItemLocations());
+		model.addAttribute("locations",itemServiceImpl.getItemLocations());
+		System.out.println(itemServiceImpl.getItemLocations());
 		return "save";
 	}
 	
 	@PostMapping("/items/add")
 	public String addItem(@ModelAttribute Item item) {
 		System.out.println(item);
-		return "list";
+		itemServiceImpl.addItem(item);
+		return "redirect:/items";
 	}
 	
 	
