@@ -1,7 +1,10 @@
 package com.example.app.controller;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,18 +35,47 @@ public class ItemController {
 	
 	@GetMapping("/items/add")
 	public String showAddForm(Model model) {
-		model.addAttribute("inputForm",new Item());
+		Item item = new Item();
+//		item.setLocation(new Location());
+		model.addAttribute("inputForm",item);
 		model.addAttribute("locations",itemServiceImpl.getItemLocations());
 		System.out.println(itemServiceImpl.getItemLocations());
 		return "save";
 	}
 	
 	@PostMapping("/items/add")
-	public String addItem(@ModelAttribute Item item) {
+	public String addItem(@Valid @ModelAttribute("inputForm") Item item,
+													BindingResult result,
+													Model model) {
+		
+		if(result.hasErrors()) {
+			System.out.println(result.getAllErrors());
+			model.addAttribute("locations",itemServiceImpl.getItemLocations());
+			return "save";
+		}
+		
+		
 		System.out.println(item);
 		itemServiceImpl.addItem(item);
 		return "redirect:/items";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

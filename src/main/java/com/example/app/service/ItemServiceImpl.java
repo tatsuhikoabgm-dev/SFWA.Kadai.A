@@ -18,29 +18,34 @@ public class ItemServiceImpl implements ItemService{
 	private final ItemMapper itemMapper;
 	private final LocationMapper locationMapper;
 
+	@Override
 	public List<Item> getAllItems() {
 		return itemMapper.selectAll();
 
 	}
-
+	
+	@Override
 	public Item getItemById(Integer id) {
 		return itemMapper.selectbyId(id);
 	}
 
-	
+	@Override
 	public void addItem(Item item) {
 //	 item.setLocation(new Location()); これは
 		itemMapper.insert(item);
 	}
 	
+	@Override
 	public void editItem(Item item) {
 		itemMapper.update(item);
 	}
 	
+	@Override
 	public void deleteItem(Integer id) {
 		itemMapper.delete(id);
 	}
 
+	@Override
 	public List<Location> getItemLocations(){
 		return locationMapper.selectAll();
 	}
