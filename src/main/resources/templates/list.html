@@ -41,6 +41,7 @@
 		<!-- /.container -->
 	</nav>
 	<div class="container mt-5">
+		<div th:if="${done != null}" th:text="${done}"  class="alert alert-success" ></div>
 		<h1>備品リスト</h1>
 		<a class="btn btn-primary my-3" th:href="@{/items/add}">備品の追加</a>
 		<div class="row">

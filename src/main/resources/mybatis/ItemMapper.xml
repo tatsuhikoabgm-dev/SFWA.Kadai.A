@@ -18,6 +18,16 @@
 		<result property="name" column="l_name" />
 	</resultMap>
 
+
+	<!-- <resultMap type="Item" id="selectbyId"> -->
+	<!-- <id property="id" column="i_id"/> -->
+	<!-- <result property="amount" column="amount"/> -->
+	<!-- <result property="registered" column="registered"/> -->
+	<!-- <result property="updated" column="updated"/> -->
+	<!-- <result property="note" column="note"/> -->
+	<!-- <association property="location" resultMap="locationResult"/> -->
+	<!-- </resultMap> -->
+
 	<select id="selectAll" resultMap="itemsResult">
 
 		select i.id as i_id ,
@@ -33,24 +43,42 @@
 
 	</select>
 
-	<select id="selectbyId" resultType="Item">
+	<select id="selectbyId" parameterType="Integer"
+		resultMap="itemsResult">
 
-		select *
-		from items
-		where id =
-		#{id};
-
+		select i.id as i_id,
+		amount,
+		l.name as l_name,
+		registered,
+		updated,
+		note,
+		i.name as i_name
+		from items i
+		join locations l
+		on
+		i.location_id = l.id
+		where i.id = #{id} ;
 	</select>
 
 
-		<insert id="insert" parameterType="Item">
-	
-			insert into
-			items(name,amount,location_id,note)
-			values(#{name},#{amount},#{location.id},#{note});
-	
-	
-		</insert>
+	<insert id="insert" parameterType="Item">
+
+		insert into
+		items(name,amount,location_id,note)
+		values(#{name},#{amount},#{location.id},#{note});
+
+	</insert>
+
+	<delete id="delete" parameterType="Integer">
+
+		delete
+		from items
+		where id = #{id};
+
+	</delete>
+
+
+
 
 
 </mapper>
