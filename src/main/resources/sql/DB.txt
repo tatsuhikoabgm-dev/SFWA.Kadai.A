@@ -59,3 +59,28 @@ INSERT INTO items VALUES (3,'ノートPC',      2,1,'Webカメラ付き','2024-0
 INSERT INTO items VALUES (4,'ノートPC',      3,2,NULL,           '2024-03-05 00:00:00','2024-03-05 00:00:00');
 INSERT INTO items VALUES (5,'無線ルータ',    1,2,NULL,           '2024-03-10 00:00:00','2024-03-10 00:00:00');
 INSERT INTO items VALUES (6,'プロジェクター',1,3,NULL,           '2024-03-15 00:00:00','2024-03-15 00:00:00');
+
+
+---
+--- members
+---
+
+
+create table members(
+id int primary key not null auto_increment,
+name varchar(20) not null,
+login_id  varchar(20) not null unique COLLATE utf8mb4_0900_as_cs,
+login_pass char(60) not null);
+
+---
+---member
+---
+
+
+insert into members
+(name,login_id,Login_pass)
+values
+("山田太郎","taro","$2a$10$WZHo5Z1FNVKo5rZcDdJ/seUemb1YC.T.z3AespUAwqB7P9/NGEUH."),
+("鈴木花子","hana","$2a$10$vgBi0giJpGqLKq0QRetnJ.w/LDSqg3zlTXJzTIa2c0Y/dmk.lZfJm");
+
+

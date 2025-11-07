@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/style.css" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css/}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>備品管理</title>
   </head>
   <body>
     <div class="container mt-5">
       <div class="row">
         <div class="col-lg-4 offset-lg-4">
-          <form action="list.html">
+          <form th:action="@{/}" th:object="${inputForm}" method="post">
             <h1 class="h3 text-center mb-3 fw-normal">備品管理システム</h1>
 
             <div class="form-floating">
               <input
                 type="text"
+				th:field="*{loginId}"
                 class="form-control rounded-0 rounded-top"
                 id="floatingInput"
                 placeholder="ログインID"
@@ -27,6 +28,7 @@
             <div class="form-floating mb-3">
               <input
                 type="password"
+				th:field="*{loginPass}"
                 class="form-control border-top-0 rounded-0 rounded-bottom"
                 id="floatingPassword"
                 placeholder="パスワード"
@@ -39,11 +41,16 @@
               type="submit"
               value="ログイン"
             />
+		  <div class="alert alert-danger" th:errors="*{loginId}"></div>
+		  <div class="alert alert-danger" th:errors="*{loginPass}"></div>
+		  <div th:if="${failed} != null " class="alert alert-danger" th:text="${failed}"></div>
           </form>
+		  
+		  
         </div>
       </div>
     </div>
     <!-- /.container -->
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
   </body>
 </html>
