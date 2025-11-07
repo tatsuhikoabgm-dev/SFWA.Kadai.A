@@ -32,10 +32,12 @@ public class ItemController {
 	public String showItems(Model model) {
 		
 		model.addAttribute("items",itemServiceImpl.getAllItems());
-		System.out.println(itemServiceImpl.getAllItems());
+		System.out.println("showItems　　" + itemServiceImpl.getAllItems());
 		
 		return "list";
 	}
+	
+	
 	
 	@GetMapping("/items/add")
 	public String showAddForm(Model model) {
@@ -43,9 +45,12 @@ public class ItemController {
 //		item.setLocation(new Location());
 		model.addAttribute("inputForm",item);
 		model.addAttribute("locations",itemServiceImpl.getItemLocations());
-		System.out.println(itemServiceImpl.getItemLocations());
+		System.out.println("showAddForm　　" + itemServiceImpl.getItemLocations());
 		return "save";
 	}
+	
+	
+	
 	
 	@PostMapping("/items/add")
 	public String addItem(@Valid @ModelAttribute("inputForm") Item item,
@@ -53,50 +58,78 @@ public class ItemController {
 													Model model) {
 		
 		if(result.hasErrors()) {
-			System.out.println(result.getAllErrors());
+			System.out.println("addItem.ALLErrors　　" + result.getAllErrors());
 			model.addAttribute("locations",itemServiceImpl.getItemLocations());
 			return "save";
 		}
 		
 		
-		System.out.println(item);
+		System.out.println("addItem　　" + item);
 		itemServiceImpl.addItem(item);
 		return "redirect:/items";
 	}
 	
 	
+	
+	
 	@GetMapping("/items/detail/{id}")
 	public String showItemDetail(@PathVariable Integer id,
 								Model model) {
-		System.out.println(id);
+	
 		if(itemServiceImpl.getItemById(id) == null) {
 			model.addAttribute("error","お探しの備品は存在しません");
 			model.addAttribute("itemDetail",null);
 			return "detail";
 		}
 		model.addAttribute("itemDetail",itemServiceImpl.getItemById(id));
-		System.out.println(model.getAttribute("itemDetail"));
+		System.out.println("showItemDetail　　:" + model.getAttribute("itemDetail"));
 		
 		return "detail";
 	}
 	
-	@GetMapping("/items/edit")
-	public String editItem() {
+	
+	
+	
+	@GetMapping("/items/edit/{id}")
+	public String showEditForm(@PathVariable Integer id,
+													Model model) {
+		
+		model.addAttribute("itemDetail",itemServiceImpl.getItemById(id));
+		model.addAttribute("locations",itemServiceImpl.getItemLocations());
+		
 		return "edit";
 	}
 	
 	
-	
-	
+	@PostMapping("/items/edit")
+	public String editItem(@Valid @ModelAttribute("itemDetail") Item itemDetail,
+													BindingResult result,
+													RedirectAttributes ra,
+													Model model){
+		
+		System.out.println("editItem.itemDetail" + itemDetail);
+		if(result.hasErrors()) {
+			System.out.println("editItem.ALLErrors　　:" + result.getAllErrors());
+			model.addAttribute("itemDetail",itemDetail);
+			model.addAttribute("locations",itemServiceImpl.getItemLocations());
+			return "edit";
+		}
+		
+		itemServiceImpl.editItem(itemDetail);
+		ra.addFlashAttribute("done","備品情報を更新しました");
+		
+		return "redirect:/items/detail/" + itemDetail.getId();
+	}
 	
 	
 	
 	@GetMapping("/items/delete/{id}")
 	public String deleteItem(@PathVariable Integer id,
 							RedirectAttributes done) {
-		System.out.println(id);
+		System.out.println("deleteItem　　:" + id);
 		itemServiceImpl.deleteItem(id);
 		done.addFlashAttribute("done","備品を削除しました");
+		
 		return "redirect:/items";
 	}
 	

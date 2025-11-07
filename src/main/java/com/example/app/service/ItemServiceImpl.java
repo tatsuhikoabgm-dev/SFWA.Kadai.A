@@ -31,7 +31,12 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public void addItem(Item item) {
-//	 item.setLocation(new Location()); これは
+		
+		/* これは自動バインドがあるからいらない
+		 * これかくとオブジェクトの上書きでnullになる
+		 * 勉強になった
+		 */
+//	  item.setLocation(new Location());
 		itemMapper.insert(item);
 	}
 	

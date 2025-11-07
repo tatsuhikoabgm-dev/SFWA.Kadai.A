@@ -34,9 +34,11 @@
 		i.name as
 		i_name,
 		i.amount,
+		l.id as l_id,
 		l.name as l_name
 		from locations l
-		join items i
+		join
+		items i
 		on
 		i.location_id = l.id
 		order by i.registered desc;
@@ -48,6 +50,7 @@
 
 		select i.id as i_id,
 		amount,
+		l.id as l_id,
 		l.name as l_name,
 		registered,
 		updated,
@@ -69,11 +72,25 @@
 
 	</insert>
 
+
+	<update id="update" parameterType="Item">
+
+		UPDATE items
+		SET
+		name = #{name},
+		amount = #{amount},
+		location_id = #{location.id},
+		note = #{note}
+		WHERE id = #{id};
+
+	</update>
+
 	<delete id="delete" parameterType="Integer">
 
 		delete
 		from items
-		where id = #{id};
+		where id =
+		#{id};
 
 	</delete>
 
