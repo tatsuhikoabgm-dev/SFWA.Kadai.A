@@ -41,9 +41,8 @@ public class ItemController {
 	
 	@GetMapping("/items/add")
 	public String showAddForm(Model model) {
-		Item item = new Item();
 //		item.setLocation(new Location());
-		model.addAttribute("inputForm",item);
+		model.addAttribute("inputForm",new Item());
 		model.addAttribute("locations",itemServiceImpl.getItemLocations());
 		System.out.println("showAddForm　　" + itemServiceImpl.getItemLocations());
 		return "save";
